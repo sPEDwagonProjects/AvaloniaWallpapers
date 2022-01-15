@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>AvaloniaWallpapers</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.7" />
+        <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.9.1" />
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="ReactiveUI" Version="17.1.17" />
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Remove="Views\Controls\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Views\Controls\**" />
+        <Compile Update="Views\DownloadView.axaml.cs">
+          <DependentUpon>DownloadView.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="Views\Controls\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Views\Controls\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Res\spedwagon.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaResource Include="Res\spedwagon.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Views\CategoryListControl.axaml.cs">
+            <DependentUpon>CategoryListControl.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\SearchViewControl.axaml.cs">
+            <DependentUpon>SearchViewControl.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\WallsAlphaCodersLib\WallsAlphaCodersLib.csproj" />
+    </ItemGroup>
+</Project>

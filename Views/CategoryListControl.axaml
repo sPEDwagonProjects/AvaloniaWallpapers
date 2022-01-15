@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:viewModels="clr-namespace:AvaloniaAlphacodersWallpaperLoader.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaAlphacodersWallpaperLoader.Views.CategoryListControl">
+   
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="PointerPressed">
+            <ia:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <UserControl.Background>
+        <SolidColorBrush Color="Gray" Opacity="0.8" />
+    </UserControl.Background>
+    <Grid Margin="0,80" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Width="540" CornerRadius="10"
+                Background="White">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="ExtraBold"
+                       FontSize="20" Margin="20" Text="Категории" />
+        </Border>
+        <Border Grid.Row="1" Margin="0,20,0,0"
+                Background="White"
+                CornerRadius="10">
+            <ListBox Margin="20" Background="White" Width="500"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     SelectedIndex="{Binding CategorySelectedIndex}"
+                     Items="{Binding Categories}">
+
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+                </ListBox.Styles>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.DataTemplates>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Width="120"
+                                   Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.DataTemplates>
+            </ListBox>
+        </Border>
+    </Grid>
+</UserControl>

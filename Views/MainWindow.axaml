@@ -1,0 +1,189 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaAlphacodersWallpaperLoader.ViewModels"
+        xmlns:views="using:AvaloniaAlphacodersWallpaperLoader.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaAlphacodersWallpaperLoader.Views.MainWindow"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:mwc="wrapVirtualization"
+        xmlns:avaloniaAlphacodersWallpaperLoader="clr-namespace:AvaloniaAlphacodersWallpaperLoader"
+        xmlns:models="clr-namespace:AvaloniaAlphacodersWallpaperLoader.Models"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaAlphacodersWallpaperLoader">
+   
+<Window.Background>
+    <SolidColorBrush Color="White" ></SolidColorBrush>
+</Window.Background>
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="Gray" />
+            <Setter Property="TextBlock.Foreground" Value="White"></Setter>
+        </Style>
+		<Style Selector="Button">
+				<Setter Property="Margin" Value="10"/>
+			    <Setter Property="FontSize" Value="16"/>
+			    <Setter Property="FontWeight" Value="Bold"/>
+		</Style>
+    </Window.Styles>
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+		
+		<StackPanel  HorizontalAlignment="Center"  Orientation="Horizontal">
+			<Button  Content="Случайные" Command="{Binding RandomPageCommand}"/>
+			<Button  Content="Поиск" Command="{Binding SearchPageCommand}" />
+			<Button  Content="Категории" Command="{Binding CategoryPageCommand}"/>
+			<Button  Content="Загрузки" Command="{Binding DownloadPageCommand}"/>
+			<Button  Content="О приложении" Command="{Binding AboutPageCommand}"/>
+		</StackPanel>
+       
+
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Spacing="20" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                <Button Command="{Binding ActiveView.PreviousPageCommand}"
+                        IsVisible="{Binding ActiveView.BackPaginationIsVisible}" Background="transparent">
+                    <Button.Content>
+                        <Path HorizontalAlignment="Center" Stretch="Uniform" Height="40" Width="50"
+                              Data="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12
+			c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028
+			c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265
+			c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"
+                              Fill="Gray" />
+                    </Button.Content>
+                    <Button.RenderTransform>
+                        <RotateTransform Angle="180" />
+                    </Button.RenderTransform>
+                </Button>
+                <TextBlock Grid.Column="1" Text="{Binding ActiveView.Title}" FontSize="16" FontWeight="ExtraBold"
+                           VerticalAlignment="Center" />
+
+                <Button Command="{Binding ActiveView.NextPageCommand}"
+                        IsVisible="{Binding ActiveView.NextPaginationIsVisible}" Background="transparent"
+                        Grid.Column="2">
+
+                    <Button.Content>
+                        <Path HorizontalAlignment="Center" Stretch="Uniform" Height="40" Width="50"
+                              Data="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12
+			c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028
+			c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265
+			c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"
+                              Fill="Gray" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+           
+               
+           <ListBox SelectedIndex="{Binding ImageSelectedIndex}" Margin="0,20" HorizontalAlignment="Center"
+                     Grid.Row="1"  Background="transparent"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     Items="{Binding ImageModels}" VirtualizationMode="Simple">
+            
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="transparent" />
+                    </Style>
+                </ListBox.Styles>
+                
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.DataTemplates>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+
+                            <CheckBox IsChecked="{Binding Checked}" Margin="2">
+                                <CheckBox.Styles>
+                                    <Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
+                                         
+                                        <Setter Property="Background" Value="Gray" />
+                                    </Style>
+                                </CheckBox.Styles>
+                            </CheckBox>
+                            <Border Opacity="1" CornerRadius="10" Background="Gray" MinHeight="200" MinWidth="400">
+
+                                <Border.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Delay="0:0:0.2" Property="Opacity" Duration="0:0:2" />
+                                    </Transitions>
+                                </Border.Transitions>
+
+
+                                <i:Interaction.Behaviors>
+
+                                    <ia:DataTriggerBehavior Binding="{Binding  BitmapImage.Size.Height}"
+                                                            ComparisonCondition="GreaterThan" Value="0">
+
+
+                                        <ia:ChangePropertyAction PropertyName="Opacity" Value="0" />
+
+                                        <ia:ChangePropertyAction PropertyName="Background">
+                                            <ia:ChangePropertyAction.Value>
+                                                <ImageBrush Source="{Binding BitmapImage}" Stretch="Fill"
+                                                            BitmapInterpolationMode="LowQuality" />
+
+                                            </ia:ChangePropertyAction.Value>
+                                        </ia:ChangePropertyAction>
+
+                                        <ia:ChangePropertyAction PropertyName="Opacity" Value="1" />
+
+                                    </ia:DataTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.DataTemplates>
+            </ListBox>
+
+           
+            <StackPanel Grid.Row="2">
+
+                <Button Padding="15" Margin="0,0,0,20" Foreground="White" FontWeight="UltraBold"
+                        Content="Скачать изображения..."
+
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding DownloadCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="Gray" Opacity="0.8" />
+                    </Button.Background>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+
+        <views:SearchViewControl Grid.RowSpan="2" IsVisible="{Binding IsVisible}"
+                                 DataContext="{Binding SearchViewModel}" />
+		
+        <views:CategoryListControl Grid.RowSpan="2" DataContext="{Binding CategoryViewModel}"
+                                   IsVisible="{Binding IsVisible}" />
+        
+        <views:ImageView Grid.RowSpan="2" DataContext="{Binding ImageViewViewModel}"
+                         IsVisible="{Binding  DataContext.ImageViewIsVisible, 
+                         RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
+        
+        <views:DownloadView IsVisible="{Binding IsVisible}" Grid.Row="1" Background="White"
+                            DataContext="{Binding DownloadViewModel}"  />
+		<views:AboutView  Grid.Row="1"  Background="White" 
+						  IsVisible="{Binding IsVisible}" 
+						  DataContext="{Binding AboutViewModel}"/>
+    </Grid>
+</Window>

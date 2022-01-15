@@ -1,0 +1,123 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+             xmlns:viewModels="clr-namespace:AvaloniaAlphacodersWallpaperLoader.ViewModels"
+             xmlns:converters="clr-namespace:AvaloniaAlphacodersWallpaperLoader.Converters"
+             x:Class="AvaloniaAlphacodersWallpaperLoader.Views.DownloadView">
+    <UserControl.DataContext>
+        <viewModels:DownloadViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converters:SizeConverter x:Key="SizeConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <ListBox Margin="20" Background="Transparent" Items="{Binding DownloadModels}">
+            <ListBox.Styles>
+                
+                <Style Selector="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+                
+                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
+                </Style>
+                
+                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
+                </Style>
+                
+            </ListBox.Styles>
+            <ListBox.DataTemplates>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                       
+
+                        <Border CornerRadius="10" Grid.RowSpan="2" Height="80" Width="80">
+                            <Border.Background>
+                                <ImageBrush Source="{Binding Model.BitmapImage}" Stretch="UniformToFill" />
+                            </Border.Background>
+                        </Border>
+
+
+                        <StackPanel  Spacing="10" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center">
+                            
+                            <TextBlock FontWeight="ExtraBold"  Text="Скачивание"   Foreground="Black">
+                                
+                                <i:Interaction.Behaviors>
+                                    <ia:DataTriggerBehavior Binding="{Binding IsError}" Value="True">
+                                        <ia:ChangePropertyAction PropertyName="Text" Value="{Binding Error}"/>
+                                        <ia:ChangePropertyAction PropertyName="Foreground" Value="Red"/>
+                                    </ia:DataTriggerBehavior>
+                                    <ia:DataTriggerBehavior Binding="{Binding IsDownloaded}" Value="True">
+                                        <ia:ChangePropertyAction PropertyName="Text" Value="Завершено"/>
+                                        <ia:ChangePropertyAction PropertyName="Foreground" Value="Green"/>
+                                    </ia:DataTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                                
+                            </TextBlock>
+                            
+                            <TextBlock    IsVisible="True"  TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left">
+                                <i:Interaction.Behaviors>
+                                    <ia:EventTriggerBehavior EventName="PointerPressed" >
+                                        <ia:InvokeCommandAction Command="{Binding PathClickCommand}"></ia:InvokeCommandAction>
+                                    </ia:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                                
+                                <TextBlock.Styles>
+                                    <Style Selector="TextBlock:pointerover">
+                                        <Setter Property="Foreground" >
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Cursor" Value="Hand"></Setter>
+                                    </Style>
+                                </TextBlock.Styles>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}">
+                                        <Binding Path="DownloadPath" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+
+
+                            <StackPanel Spacing="10" Orientation="Horizontal">
+                                
+                                <ProgressBar Maximum="99" ShowProgressText="True" Value="{Binding Percentage}"
+                                             Height="14" Foreground="Gray" />
+                                
+                                <TextBlock VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}% ({1}/{2})">
+                                            <Binding Path="Percentage" />
+                                            <Binding Path="DownloadedSize" Converter="{StaticResource SizeConverter}" />
+                                            <Binding Path="Model.Wallpaper.File_Size"
+                                                     Converter="{StaticResource SizeConverter}" />
+                                            
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                            </StackPanel>
+                           
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.DataTemplates>
+        </ListBox>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="AvaloniaAlphacodersWallpaperLoader.Views.AboutView" FontSize="20">
+	<StackPanel HorizontalAlignment="Center">
+		<TextBlock Margin="20" FontWeight="Bold"  HorizontalAlignment="Center" Text="О приложении"/>
+		<TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" Text="Программа для загрузки изображений рабочего стола"/>
+		<TextBlock Margin="0,100,0,20" FontWeight="Bold" HorizontalAlignment="Center" Text="Разработано"/>
+		<Image Source="/Res/spedwagon.png" Width="400"></Image>
+		<StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+			<TextBlock  FontWeight="Bold" Text="Проект на:"/>
+			<TextBlock Margin="5,0" FontWeight="Bold" Foreground="Blue" Text="GitHub">
+
+				<i:Interaction.Behaviors>
+					<ia:EventTriggerBehavior EventName="PointerPressed" >
+						<ia:InvokeCommandAction Command="{Binding OpenGitHubCommand}"></ia:InvokeCommandAction>
+					</ia:EventTriggerBehavior>
+				</i:Interaction.Behaviors>
+
+
+				<TextBlock.Styles>
+					<Style Selector="TextBlock:pointerover">
+						<Setter Property="Foreground">
+							<Setter.Value>
+								<SolidColorBrush Color="Black"/>
+							</Setter.Value>
+						</Setter>
+						<Setter Property="Cursor" Value="Hand"></Setter>
+					</Style>
+				</TextBlock.Styles>
+				
+				
+			</TextBlock>
+		</StackPanel>
+		<StackPanel  Margin="10,20" HorizontalAlignment="Center" Orientation="Horizontal">
+			<TextBlock FontWeight="Bold" Text="Сайт команды:"/>
+			<TextBlock Margin="5,0" Foreground="Blue" FontWeight="Bold" Text="spedwagon.online">
+				<i:Interaction.Behaviors>
+					<ia:EventTriggerBehavior EventName="PointerPressed" >
+						<ia:InvokeCommandAction Command="{Binding OpenWebCommand}"></ia:InvokeCommandAction>
+					</ia:EventTriggerBehavior>
+				</i:Interaction.Behaviors>
+				<TextBlock.Styles>
+					<Style Selector="TextBlock:pointerover">
+						<Setter Property="Foreground">
+							<Setter.Value>
+								<SolidColorBrush Color="Black"/>
+							</Setter.Value>
+						</Setter>
+						<Setter Property="Cursor" Value="Hand"></Setter>
+					</Style>
+				</TextBlock.Styles>
+			</TextBlock>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

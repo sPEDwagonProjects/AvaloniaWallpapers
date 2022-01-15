@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+
+             xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+             x:Class="AvaloniaAlphacodersWallpaperLoader.Views.ImageView">
+
+    <UserControl.Styles>
+        <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
+    </UserControl.Styles>
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="gray" Opacity="0.8" />
+        </Grid.Background>
+
+        <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="PointerPressed">
+                <ia:InvokeCommandAction Command="{Binding CloseCommand}" />
+            </ia:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+
+        <Border CornerRadius="10" Margin="100">
+            <Border.Background>
+                <ImageBrush Source="{Binding Image}" BitmapInterpolationMode="LowQuality" Stretch="Fill" />
+            </Border.Background>
+        </Border>
+
+        <avaloniaProgressRing:ProgressRing Width="80"
+
+                                           Height="80"
+                                           IsActive="{Binding IsLoading}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="White"
+                                           Margin="10,20,0,0" />
+
+    </Grid>
+</UserControl>

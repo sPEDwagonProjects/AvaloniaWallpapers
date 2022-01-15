@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             x:Class="AvaloniaAlphacodersWallpaperLoader.Views.SearchViewControl">
+
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="PointerPressed">
+            <ia:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <UserControl.Background>
+        <SolidColorBrush Color="Gray" Opacity="0.8" />
+    </UserControl.Background>
+    <Grid Margin="0,80" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Width="540" CornerRadius="10"
+                Background="White">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="ExtraBold"
+                       FontSize="20" Margin="20" Text="поиск" />
+        </Border>
+
+        <TextBox Text="{Binding Term}" Grid.Row="1" Margin="0,40,0,0" FontSize="20" CornerRadius="10" Padding="20"
+                 Background="White"
+                 VerticalContentAlignment="Center" Watermark="Введите запрос" />
+
+        <Button Grid.Row="2" Command="{Binding  SearchCommand}" HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="White" Margin="100,50,100,40" FontSize="20" Padding="20,10" CornerRadius="10"
+                Content="Найти">
+            <Button.Styles>
+                <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="BorderBrush" Value="Gray" />
+                    <Setter Property="TextBlock.Foreground" Value="{DynamicResource ButtonForegroundPointerOver}" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </Style>
+            </Button.Styles>
+        </Button>
+    </Grid>
+</UserControl>
